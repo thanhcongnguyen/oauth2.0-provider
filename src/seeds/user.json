@@ -1,9 +1,0 @@
-[
-  {
-    "model": "User",
-    "data" : {
-      "password": "$2a$10$loGFvQcud.d/eTCdwJj.LOPL7emobCsFdyWVvWEvwdyfcUnRxwjIa",
-      "phone": "0334963339"
-    }
-  }
-]
