@@ -1,16 +1,64 @@
 {
-  "name": "oauth2.0-server",
-  "version": "0.0.0",
+  "name": "api-giatdotietkiem",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "pret": "npm run eslint",
+    "eslint": "eslint ./src",
+    "start": "nodemon --exec babel-node ./bin/www",
+    "test": "set NODE_ENV=test && nyc ava --serial"
+  },
+  "ava": {
+    "require": "@babel/register",
+    "files": [
+      "test/*.test.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.3",
+    "continuation-local-storage": "^3.2.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "dotenv": "^6.2.0",
+    "errorhandler": "^1.5.0",
+    "express": "~4.16.0",
+    "joi": "^14.3.0",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "morgan": "~1.9.0",
+    "pg": "^7.7.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0",
+    "sequelize-fixtures": "^0.7.0",
+    "umzug": "^2.2.0",
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.5.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/register": "^7.0.0",
+    "@types/node": "^10.12.15",
+    "ava": "^1.0.1",
+    "ava-spec": "^1.1.1",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "husky": "^3.0.9",
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
+    "supertest": "^3.3.0"
   }
 }
