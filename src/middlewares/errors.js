@@ -1,0 +1,33 @@
+export class ApplicationError extends Error {
+	constructor(message = 'Internal Service Error!'){
+		super(message);
+		this.name = this.constructor.name;
+		this.status = 500;
+		Error.captureStackTrace(this, ApplicationError);
+	}
+}
+
+export class AuthenticationError extends ApplicationError {
+	constructor(message = 'Authentication Error!') {
+		super(message);
+		this.name = this.constructor.name;
+		this.status = 401;
+	}
+}
+
+
+export class AuthorizationError extends ApplicationError {
+	constructor(message = 'Authorization Error!') {
+		super(message);
+		this.name = this.constructor.name;
+		this.status = 403;
+	}
+}
+
+export class ValidationError extends ApplicationError {
+	constructor(message = 'Bad request!') {
+		super(message);
+		this.name = this.constructor.name;
+		this.status = 400;
+	}
+}
