@@ -61,4 +61,9 @@ export class UserController{
         });
 
     }
+
+    getUserInfo(req, res, next){
+        const access_token  = req.header['authorization'];
+        
+    }
 }

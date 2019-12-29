@@ -9,18 +9,20 @@ export class ApplicationError extends Error {
 }
 
 export class AuthenticationError extends ApplicationError {
-	constructor(message = 'Authentication Error!') {
+	constructor({message= 'Authentication Error!', error = ''}) {
 		super(message);
 		this.name = this.constructor.name;
+		this.error = error;
 		this.status = 401;
 	}
 }
 
 
 export class AuthorizationError extends ApplicationError {
-	constructor(message = 'Authorization Error!') {
+	constructor({message= 'Authorization Error!', error = ''}) {
 		super(message);
 		this.name = this.constructor.name;
+		this.error = error;
 		this.status = 403;
 	}
 }

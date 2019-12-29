@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import db from '../../models';
-import { ValidationError } from '../middlewares/errors';
+import { ValidationError, AuthorizationError, AuthenticationError } from '../middlewares/errors';
 import { SCOPE } from '../configs/constants';
 import { randomString } from '../utils/randomString';
-
+const jwt = require('jsonwebtoken');
 
 
 function hashPassword(password) {
@@ -118,6 +118,41 @@ export class UserService {
             });
 
         })
+    }
+
+    getUserInfo({ access_token }){
+        if(!access_token){
+            throw new ValidationError({
+                error: 'invalid_request'
+            });
+        }
+        let decoded = null;
+        try {
+            decoded = jwt.verify(access_token, TOKEN_KEY);
+        } catch(err) {
+            throw new AuthorizationError({
+                error: 'invalid access_token'
+            });
+        }
+        return db.User.findOne({
+            where: {
+                id: decoded.user_id
+            }
+        }).then( user => {
+            if(!user){
+                throw new AuthenticationError({
+                    error: 'user not exits!'
+                });
+            }
+            return {
+                email: user.email,
+                phone: user.phone,
+                lastName: user.lastName,
+                firstName: user.firstName,
+                address: user.address.address,
+                avatar: user.avatar
+            }
+        });
     }
 }
 

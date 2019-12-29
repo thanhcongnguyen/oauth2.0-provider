@@ -26,8 +26,7 @@ const user = new UserController();
 
 //routes
 
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
+router.get('/info', (req, res, next) => {
 });
 
 router.post('/register', upload.single('avatar'), user.register);
