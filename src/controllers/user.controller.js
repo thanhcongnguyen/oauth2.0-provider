@@ -49,7 +49,7 @@ export class UserController{
             scope,
             state
         }).then( user => {
-            res.send(200).send({
+            res.status(200).send({
                 data:{
                     code: user.code,
                     state: user.state
