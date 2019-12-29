@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "postgres",
+    "username": "wecantalk",
     "password": "123456",
-    "database": "oauth-provider",
+    "database": "wct",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
