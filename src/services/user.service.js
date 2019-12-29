@@ -92,12 +92,19 @@ export class UserService{
             return db.Provider.findOne({
                 where: { client_id }
             }).then( client => {
+
                 if(!client){
                     throw new ValidationError({
                         error: 'unauthorized_client'
                     })
                 }
-                console.log('authRes', client);
+                
+                if(client.redirect_uri != redirect_uri){
+                    throw new ValidationError({
+                        error: 'error_uri'
+                    });
+                }
+
                 return {
                     code: '123456daiusdhaiu',
                     state
