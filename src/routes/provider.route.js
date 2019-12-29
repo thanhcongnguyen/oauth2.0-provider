@@ -5,7 +5,7 @@ var router = express.Router();
 import { errorMiddleware } from '../middlewares/errorMiddleware';
 
 //import controller
-import { ProviderController } from '../controllers/provider.cotroller';
+import { ProviderController } from '../controllers/provider.controller';
 const provider = new ProviderController();
 
 
