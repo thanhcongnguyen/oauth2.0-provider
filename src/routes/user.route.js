@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+//import middleware
+import { errorMiddleware } from '../middlewares/errorMiddleware';
+
 //import multer
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -30,8 +33,10 @@ router.get('/', (req, res, next) => {
 router.post('/register', upload.single('avatar'), user.register);
 
 
-router.post('/login', (req, res, next) => {
+router.post('/login', user.login);
 
-});
+router.use(errorMiddleware);
+
+
 
 module.exports = router;

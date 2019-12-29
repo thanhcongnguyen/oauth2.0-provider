@@ -2,6 +2,7 @@ export class ApplicationError extends Error {
 	constructor(message = 'Internal Service Error!'){
 		super(message);
 		this.name = this.constructor.name;
+		this.error = 'server_error';
 		this.status = 500;
 		Error.captureStackTrace(this, ApplicationError);
 	}
@@ -25,9 +26,10 @@ export class AuthorizationError extends ApplicationError {
 }
 
 export class ValidationError extends ApplicationError {
-	constructor(message = 'Bad request!') {
+	constructor({message= 'Bad request!', error = ''}) {
 		super(message);
 		this.name = this.constructor.name;
+		this.error = error;
 		this.status = 400;
 	}
 }

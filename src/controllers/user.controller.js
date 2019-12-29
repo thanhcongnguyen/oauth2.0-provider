@@ -7,7 +7,6 @@ export class UserController{
     register(req, res, next){
         const { phone , email, address, firstName, lastName, password } = req.body;
         const file = req.file;
-        console.log(file);
         if(!file){
             throw new ValidationError('please choose avatar!');
         }
@@ -36,5 +35,30 @@ export class UserController{
 			next(err);
 		});
 
-	}
+    }
+    
+    login(req, res, next){
+        const { response_type, client_id, redirect_uri, scope, state } = req.query;
+        const { email, password } = req.body;
+        return user.login({
+            email,
+            password,
+            response_type,
+            client_id,
+            redirect_uri,
+            scope,
+            state
+        }).then( user => {
+            res.send(200).send({
+                data:{
+                    code: user.code,
+                    state: user.state
+                },
+                status: true
+            });
+        }).catch( err => {
+            next(err);
+        });
+
+    }
 }
