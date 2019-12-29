@@ -12,6 +12,6 @@ import {
 } from '../controllers/authenticate.controller';
 const auth = new AuthenticateController();
 
-router.post('/token', auth.createToken);
+router.post('/', auth.createToken);
 router.use(errorMiddleware);
 module.exports = router;

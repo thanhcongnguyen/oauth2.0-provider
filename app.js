@@ -8,6 +8,7 @@ const path = require('path');
 //import routes
 const usersRouter = require('./src/routes/user.route');
 const providersRouter = require('./src/routes/provider.route');
+const authRouter = require('./src/routes/authenticate.route');
 
 app.use(express.static(path.resolve('./uploads')));
 app.use(logger('dev'));
@@ -19,4 +20,5 @@ app.use(cookieParser());
 //use routes
 app.use('/user', usersRouter);
 app.use('/provider', providersRouter);
+app.use('/token', authRouter);
 module.exports = app;
