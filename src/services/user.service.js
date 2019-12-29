@@ -22,23 +22,22 @@ function comparePassword(password, hash) {
 }
 
 export class UserService {
-    register({ phone, address, avatar, email, firstName, lastName, password }) {
-        if (!phone || !email || !address || !firstName || !lastName || !avatar || !password) {
-            throw new ValidationError();
+    register({ email, password }) {
+        if (!email || !password) {
+            throw new ValidationError({
+                error: 'invalid_request'
+            });
         }
         return db.User.findOne({
             where: { email }
         }).then((user) => {
             if (user) {
-                throw new ValidationError('user exists!');
+                throw new ValidationError({
+                    error: 'user exists!'
+                });
             } else {
                 return db.User.create({
-                    phone,
-                    address,
                     email,
-                    firstName,
-                    lastName,
-                    avatar,
                     password: hashPassword(password)
                 });
             }

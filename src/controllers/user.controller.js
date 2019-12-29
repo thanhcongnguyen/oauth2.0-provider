@@ -5,19 +5,10 @@ const user = new UserService();
 
 export class UserController{
     register(req, res, next){
-        const { phone , email, address, firstName, lastName, password } = req.body;
-        const file = req.file;
-        if(!file){
-            throw new ValidationError('please choose avatar!');
-        }
+        const { email, password } = req.body;
 		user.register({
-			phone,
             password,
             email,
-            address,
-            firstName,
-            lastName,
-            avatar: hostname + file.filename
 		}).then( user => {
 			res.status(200).send({
 				data: {
@@ -34,12 +25,10 @@ export class UserController{
 		}).catch(err => {
 			next(err);
 		});
-
     }
     
     login(req, res, next){
-        const { response_type, client_id, redirect_uri, scope, state } = req.query;
-        const { email, password } = req.body;
+        const { email, password, response_type, client_id, redirect_uri, scope, state } = req.body;
         return user.login({
             email,
             password,

@@ -4,6 +4,7 @@ var bodyParser = require('body-parser')
 var logger = require('morgan');
 var app = express();
 const path = require('path');
+var cors = require('cors');
 
 //import routes
 const usersRouter = require('./src/routes/user.route');
@@ -15,6 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
+app.use(cors());
 
 
 //use routes
