@@ -2,6 +2,7 @@ import _ from 'lodash';
 import db from '../../models';
 import { ValidationError } from '../middlewares/errors';
 import { SCOPE } from '../configs/constants';
+import { randomString } from '../utils/randomString';
 
 
 
@@ -98,17 +99,22 @@ export class UserService{
                         error: 'unauthorized_client'
                     })
                 }
-                
+
                 if(client.redirect_uri != redirect_uri){
                     throw new ValidationError({
                         error: 'error_uri'
                     });
                 }
-
-                return {
-                    code: '123456daiusdhaiu',
-                    state
-                }
+                return db.Code.create({
+                    code: randomString(10),
+                    client_id,
+                    user_id: user.id
+                }).then( code => {
+                    return {
+                        code,
+                        state
+                    }
+                });
             });
 
         })
