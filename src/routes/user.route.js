@@ -27,6 +27,7 @@ const user = new UserController();
 //routes
 
 router.get('/info', (req, res, next) => {
+  res.send('da lay được thông tin');
 });
 
 // router.post('/register', upload.single('avatar'), user.register);
