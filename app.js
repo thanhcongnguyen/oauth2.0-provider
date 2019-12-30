@@ -20,7 +20,7 @@ app.use(cors());
 
 
 //use routes
-app.use('/user', usersRouter);
-app.use('/provider', providersRouter);
-app.use('/token', authRouter);
+app.use('api/user', usersRouter);
+app.use('api/provider', providersRouter);
+app.use('api/token', authRouter);
 module.exports = app;
