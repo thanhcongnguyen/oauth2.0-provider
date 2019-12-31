@@ -41,6 +41,7 @@ export class AuthenticateService {
                     code
                 }
             }).then( code => {
+                console.log('codeeeee', code)
                 if(!code){
                     throw new AuthenticationError({
                         error: 'code not exits!'
