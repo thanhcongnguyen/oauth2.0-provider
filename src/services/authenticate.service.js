@@ -41,7 +41,6 @@ export class AuthenticateService {
                     code
                 }
             }).then( code => {
-                console.log('codeeeee', code)
                 if(!code){
                     throw new AuthenticationError({
                         error: 'code not exits!'
@@ -51,26 +50,16 @@ export class AuthenticateService {
                     { 
                         user_id: code.user_id 
                     }, 
-                        TOKEN_KEY, 
-                    { 
-                        algorithm: 'RS256'
-                    },
-                    {
-                        expiresIn: 3600
-                    }
+                    TOKEN_KEY
                 );
+
+                console.log('access_token', access_token)
 
                 let refresh_token = jwt.sign(
                     { 
                         user_id: code.user_id 
                     }, 
-                        TOKEN_KEY, 
-                    { 
-                        algorithm: 'RS256'
-                    },
-                    {
-                        expiresIn: 60*60*24
-                    }
+                    TOKEN_KEY
                 );
 
                 
