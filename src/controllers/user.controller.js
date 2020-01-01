@@ -53,7 +53,23 @@ export class UserController{
 
     getUserInfo(req, res, next){
         const access_token  = req.header['authorization'];
-        
+        return user.getUserInfo({
+            access_token
+        }).then( user => {
+            res.status(200).send({
+                data: {
+                    lastName: user.lastName,
+                    firstName: user.firstName,
+                    phone: user.phone,
+                    address: user.address,
+                    email: user.email,
+                    avatar: user.avatar
+                },
+                status: true
+            });
+        }).catch( err => {
+            next(err);
+        });
     }
 
 
