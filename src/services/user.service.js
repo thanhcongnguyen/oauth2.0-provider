@@ -3,6 +3,7 @@ import db from '../../models';
 import { ValidationError, AuthorizationError, AuthenticationError } from '../middlewares/errors';
 import { SCOPE } from '../configs/constants';
 import { randomString } from '../utils/randomString';
+import { TOKEN_KEY } from '../configs/constants';
 const jwt = require('jsonwebtoken');
 
 
@@ -165,6 +166,7 @@ export class UserService {
         let decoded = null;
         try {
             decoded = jwt.verify(access_token, TOKEN_KEY);
+            
         } catch(err) {
             throw new AuthorizationError({
                 error: 'invalid access_token'
@@ -181,9 +183,9 @@ export class UserService {
                     error: 'user not exits!'
                 });
             }
-
+            console.log('userrrr', user);
             if(user){
-                return db.User.update({
+                return user.update({
                     lastName: data.lastName,
                     firstName: data.firstName,
                     address: data.address,
