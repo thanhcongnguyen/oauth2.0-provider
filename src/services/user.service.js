@@ -120,6 +120,59 @@ export class UserService {
         })
     }
 
+    userLogin({ email, password }){
+        if (!email || !password) {
+            throw new ValidationError({
+                error: 'invalid_request'
+            });
+        }
+
+        return db.User.findOne({
+            where: { email }
+        }).then(async user => {
+            if (!user) {
+                throw new ValidationError({
+                    error: 'user not exits!'
+                })
+            }
+            let result = await comparePassword(password, user.password);
+            if (!result) {
+                throw new ValidationError({
+                    error: 'invalid password!'
+                });
+            }
+
+            let userInfo = {
+                user_id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                avatar: user.avatar
+            };
+
+            let access_token = jwt.sign(
+                userInfo,
+                TOKEN_KEY
+            );
+
+            let refresh_token = jwt.sign(
+                { 
+                    user_id: user.id 
+                }, 
+                TOKEN_KEY
+            );
+
+            return {
+                access_token,
+                token_type: 'bearer',
+                expires_in: 3600,
+                refresh_token,
+                scope: 'read create'
+            }
+
+        });
+    }
+
     getUserInfo({ access_token }){
         if(!access_token){
             throw new ValidationError({

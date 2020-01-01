@@ -51,6 +51,28 @@ export class UserController{
 
     }
 
+
+    userLogin(req, res, next){
+        const { email, password } = req.body;
+        return user.userLogin({
+            email, 
+            password
+        }).then( response => {
+            res.status(200).send({
+				data: {
+                    access_token: response.access_token,
+                    token_type: response.token_type,
+                    expires_in: response.expires_in,
+                    refresh_token: response.refresh_token,
+                    scope: response.scope,
+                },
+				status: true
+			});
+        }).catch( err => {
+            next(err);
+        })
+    }
+
     getUserInfo(req, res, next){
         const access_token  = req.headers['authorization'];
         console.log('access_token', access_token);
