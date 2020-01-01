@@ -33,7 +33,7 @@ router.put('/update-info', upload.single('avatar'), user.updateUserInfo);
 // router.post('/register', upload.single('avatar'), user.register);
 router.post('/register', user.register);
 
-router.post('/login', user.login);
+router.post('/login', user.loginOauth);
 
 
 
