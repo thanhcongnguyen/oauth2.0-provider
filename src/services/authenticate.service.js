@@ -46,30 +46,38 @@ export class AuthenticateService {
                         error: 'code not exits!'
                     });
                 }
-                let access_token = jwt.sign(
-                    { 
-                        user_id: code.user_id 
-                    }, 
-                    TOKEN_KEY
-                );
 
-                console.log('access_token', access_token)
+                return  db.User.findOne({
+                    where: { id: code.user_id }
+                }).then( user => {
+                    let userInfo = {
+                        user_id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        avatar: user.avatar
+                    };
 
-                let refresh_token = jwt.sign(
-                    { 
-                        user_id: code.user_id 
-                    }, 
-                    TOKEN_KEY
-                );
+                    let access_token = jwt.sign(
+                        userInfo,
+                        TOKEN_KEY
+                    );
 
-                
-                return {
-                    access_token,
-                    token_type: 'bearer',
-                    expires_in: 3600,
-                    refresh_token,
-                    scope: 'read create'
-                }
+                    let refresh_token = jwt.sign(
+                        { 
+                            user_id: user.id 
+                        }, 
+                        TOKEN_KEY
+                    );
+
+                    return {
+                        access_token,
+                        token_type: 'bearer',
+                        expires_in: 3600,
+                        refresh_token,
+                        scope: 'read create'
+                    }
+                });  
             });
         })
     }
