@@ -54,7 +54,7 @@ export class UserController{
 
     userLogin(req, res, next){
         const { email, password } = req.body;
-        console.log('req.body', req.body);
+        console.log('req.body', req);
         return user.userLogin({
             email, 
             password
