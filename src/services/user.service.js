@@ -44,7 +44,7 @@ export class UserService {
         })
     }
 
-    login({ email, password, client_id = '', redirect_uri = '', scope = '', response_type = '', state = undefined }) {
+    loginOauth({ email, password, client_id = '', redirect_uri = '', scope = '', response_type = '', state = undefined }) {
 
         if (!client_id || !redirect_uri || !response_type) {
             throw new ValidationError({
@@ -181,7 +181,7 @@ export class UserService {
                     error: 'user not exits!'
                 });
             }
-            
+
             if(user){
                 return db.User.update({
                     lastName: data.lastName,

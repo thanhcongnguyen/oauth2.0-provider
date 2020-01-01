@@ -29,7 +29,7 @@ export class UserController{
     
     login(req, res, next){
         const { email, password, response_type, client_id, redirect_uri, scope, state } = req.body;
-        return user.login({
+        return user.loginOauth({
             email,
             password,
             response_type,
