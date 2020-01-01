@@ -55,4 +55,33 @@ export class UserController{
         const access_token  = req.header['authorization'];
         
     }
+
+
+    updateUserInfo(req, res, next){
+        const { lastName, firstName, phone, address } = req.body;
+        const file = req.file;
+        const access_token  = req.header['authorization'];
+        return user.updateUserInfo({
+            lastName, 
+            firstName, 
+            phone,
+            address,
+            avatar: file,
+            access_token
+        }).then( info => {
+            res.status(200).send({
+                data: {
+                    lastName: info.lastName,
+                    firstName: info.firstName,
+                    phone: info.phone,
+                    address: info.address,
+                    email: info.email,
+                    avatar: info.avatar
+                },
+                status: true
+            });
+        }).catch( err => {
+            next(err);
+        });
+    }
 }

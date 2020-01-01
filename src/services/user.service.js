@@ -153,6 +153,45 @@ export class UserService {
             }
         });
     }
+
+    updateUserInfo(data){
+        let access_token = data.access_token;
+
+        if(!access_token){
+            throw new ValidationError({
+                error: 'invalid_request'
+            });
+        }
+        let decoded = null;
+        try {
+            decoded = jwt.verify(access_token, TOKEN_KEY);
+        } catch(err) {
+            throw new AuthorizationError({
+                error: 'invalid access_token'
+            });
+        }
+
+        return db.User.findOne({
+            where: {
+                id: decoded.user_id
+            }
+        }).then( user => {
+            if(!user){
+                throw new AuthenticationError({
+                    error: 'user not exits!'
+                });
+            }
+            
+            if(user){
+                return db.User.update({
+                    lastName: data.lastName,
+                    firstName: data.firstName,
+                    address: data.address,
+                    phone: data.phone
+                });
+            }
+        });
+    }
 }
 
 

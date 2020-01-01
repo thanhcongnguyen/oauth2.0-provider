@@ -30,10 +30,15 @@ router.get('/info', (req, res, next) => {
   res.send('da lay được thông tin');
 });
 
+router.put('/update-info', user.updateUserInfo);
+
 // router.post('/register', upload.single('avatar'), user.register);
 router.post('/register', user.register);
 
 router.post('/login', user.login);
+
+
+
 
 router.use(errorMiddleware);
 
