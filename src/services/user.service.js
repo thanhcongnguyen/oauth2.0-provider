@@ -190,7 +190,7 @@ export class UserService {
                     firstName: data.firstName,
                     address: data.address,
                     phone: data.phone,
-                    data: data.avatar
+                    avatar: data.avatar
                 });
             }
         });
