@@ -35,7 +35,7 @@ router.post('/register', user.register);
 
 router.post('/login', user.loginOauth);
 
-router.post('/user-login', user.userLogin);
+router.post('/loginuser', user.userLogin);
 
 
 
