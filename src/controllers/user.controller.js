@@ -53,6 +53,7 @@ export class UserController{
 
     getUserInfo(req, res, next){
         const access_token  = req.header['authorization'];
+        console.log('access_token', access_token);
         return user.getUserInfo({
             access_token
         }).then( user => {
