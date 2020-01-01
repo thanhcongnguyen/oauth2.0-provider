@@ -60,14 +60,13 @@ export class UserController{
     updateUserInfo(req, res, next){
         const { lastName, firstName, phone, address } = req.body;
         const file = req.file;
-        console.log('fileeee', file);
         const access_token  = req.headers['authorization'];
         return user.updateUserInfo({
             lastName, 
             firstName, 
             phone,
             address,
-            avatar: file,
+            avatar: hostname + file.path,
             access_token
         }).then( info => {
             res.status(200).send({

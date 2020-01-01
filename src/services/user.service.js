@@ -189,7 +189,8 @@ export class UserService {
                     lastName: data.lastName,
                     firstName: data.firstName,
                     address: data.address,
-                    phone: data.phone
+                    phone: data.phone,
+                    data: data.avatar
                 });
             }
         });
