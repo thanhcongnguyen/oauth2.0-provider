@@ -52,7 +52,7 @@ export class UserController{
     }
 
     getUserInfo(req, res, next){
-        const access_token  = req.header['authorization'];
+        const access_token  = req.headers['authorization'];
         console.log('access_token', access_token);
         return user.getUserInfo({
             access_token
