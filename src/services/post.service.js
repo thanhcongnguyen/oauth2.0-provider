@@ -27,14 +27,13 @@ export class PostService{
         })
     }
 
-    share({ content, id , created_by }){
+    share({ content, id , created_by, accessToken }){
 
         if(!accessToken){
             throw new AuthorizationError({
                 error: 'invalid access_token'
             });
         }
-
         let decoded = OauthServer.verifyJWT(accessToken, 'wecantalk.vn')
         if(!decoded){
             throw new AuthorizationError({
@@ -47,15 +46,14 @@ export class PostService{
                 error: 'invalid_request'
             });
         }
-        return true;
-        // return db.Post.create({
-        //     created_by,
-        //     content
-        // }).then( post => {
-        //     console.log('pót', post);
-        // }).catch( err => {
-        //     console.log('error', error);
-        // })
+        return db.Post.create({
+            created_by,
+            content
+        }).then( post => {
+            console.log('pót', post);
+        }).catch( err => {
+            console.log('error', error);
+        })
     }
 
     getPosts({ accessToken }){
