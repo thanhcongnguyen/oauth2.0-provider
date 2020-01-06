@@ -47,7 +47,8 @@ export class PostService{
         }
         return db.Post.create({
             created_by,
-            content
+            content,
+            is_share: true
         });
     }
 
