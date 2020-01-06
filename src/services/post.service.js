@@ -4,7 +4,7 @@ import { ValidationError } from '../middlewares/errors';
 import { OauthServer } from '../libraries/oauthServer';
 
 export class PostService{
-    
+
     create({ client_id, client_secret, redirect_uri}){
         if(!client_id || !client_secret || !redirect_uri){
             throw new ValidationError({
@@ -50,7 +50,11 @@ export class PostService{
         return db.Post.create({
             created_by,
             content
-        });
+        }).then( post => {
+            console.log('pót', post);
+        }).catch( err => {
+            console.log('error', error);
+        })
     }
 
     getPosts({ accessToken }){
