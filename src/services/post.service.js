@@ -40,7 +40,6 @@ export class PostService{
                 error: 'invalid access_token'
             })
         }
-        console.log('decoded',decoded );
         if(!content || !created_by){
             throw new ValidationError({
                 error: 'invalid_request'
@@ -49,11 +48,7 @@ export class PostService{
         return db.Post.create({
             created_by,
             content
-        }).then( post => {
-            console.log('pót', post);
-        }).catch( err => {
-            console.log('error', error);
-        })
+        });
     }
 
     getPosts({ accessToken }){
