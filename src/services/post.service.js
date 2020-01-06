@@ -41,7 +41,7 @@ export class PostService{
                 error: 'invalid access_token'
             })
         }
-
+        console.log('decoded',decoded );
         if(!content || !created_by){
             throw new ValidationError({
                 error: 'invalid_request'
