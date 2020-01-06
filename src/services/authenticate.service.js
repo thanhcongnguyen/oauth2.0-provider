@@ -75,7 +75,7 @@ export class AuthenticateService {
                         token_type: 'bearer',
                         expires_in: 3600,
                         refresh_token,
-                        scope: 'read create'
+                        scope: 'read write'
                     }
                 });  
             });
