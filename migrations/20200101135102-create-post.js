@@ -20,6 +20,9 @@ module.exports = {
       img_thumbnail: {
         type: Sequelize.STRING
       },
+      is_share: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
