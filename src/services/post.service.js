@@ -47,14 +47,15 @@ export class PostService{
                 error: 'invalid_request'
             });
         }
-        return db.Post.create({
-            created_by,
-            content
-        }).then( post => {
-            console.log('pót', post);
-        }).catch( err => {
-            console.log('error', error);
-        })
+        return true;
+        // return db.Post.create({
+        //     created_by,
+        //     content
+        // }).then( post => {
+        //     console.log('pót', post);
+        // }).catch( err => {
+        //     console.log('error', error);
+        // })
     }
 
     getPosts({ accessToken }){
