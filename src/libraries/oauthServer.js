@@ -12,9 +12,9 @@ export class OauthServer{
         let decoded = null;
         
         try {
-            
             decoded = jwt.verify(jwtString, secretKey);
         } catch(err) {
+            console.log('err', err);
             throw new AuthorizationError({
                 error: err.message
             });

@@ -5,6 +5,7 @@ export class PostController{
     share(req, res, next){
         const { content, created_by, id } = req.body;
         const accessToken = req.headers['authorization'];
+        console.log('accessToken', accessToken);
         return post.share({
             accessToken,
             content,
