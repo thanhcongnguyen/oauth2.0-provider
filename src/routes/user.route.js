@@ -26,14 +26,19 @@ const user = new UserController();
 
 //routes
 
-router.get('/info', (req, res, next) => {
-  res.send('da lay được thông tin');
-});
+router.get('/info', user.getUserInfo);
+
+router.put('/update-info', upload.single('avatar'), user.updateUserInfo);
 
 // router.post('/register', upload.single('avatar'), user.register);
 router.post('/register', user.register);
 
-router.post('/login', user.login);
+router.post('/login', user.loginOauth);
+
+router.post('/loginuser', user.userLogin);
+
+
+
 
 router.use(errorMiddleware);
 

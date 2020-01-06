@@ -3,6 +3,7 @@ import db from '../../models';
 import { ValidationError, AuthorizationError, AuthenticationError } from '../middlewares/errors';
 import { SCOPE } from '../configs/constants';
 import { randomString } from '../utils/randomString';
+import { TOKEN_KEY } from '../configs/constants';
 const jwt = require('jsonwebtoken');
 
 
@@ -44,7 +45,7 @@ export class UserService {
         })
     }
 
-    login({ email, password, client_id = '', redirect_uri = '', scope = '', response_type = '', state = undefined }) {
+    loginOauth({ email, password, client_id = '', redirect_uri = '', scope = '', response_type = '', state = undefined }) {
 
         if (!client_id || !redirect_uri || !response_type) {
             throw new ValidationError({
@@ -119,6 +120,59 @@ export class UserService {
         })
     }
 
+    userLogin({ email, password }){
+        if (!email || !password) {
+            throw new ValidationError({
+                error: 'invalid_request'
+            });
+        }
+
+        return db.User.findOne({
+            where: { email }
+        }).then(async user => {
+            if (!user) {
+                throw new ValidationError({
+                    error: 'user not exits!'
+                })
+            }
+            let result = await comparePassword(password, user.password);
+            if (!result) {
+                throw new ValidationError({
+                    error: 'invalid password!'
+                });
+            }
+
+            let userInfo = {
+                user_id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                avatar: user.avatar
+            };
+
+            let access_token = jwt.sign(
+                userInfo,
+                TOKEN_KEY
+            );
+
+            let refresh_token = jwt.sign(
+                { 
+                    user_id: user.id 
+                }, 
+                TOKEN_KEY
+            );
+
+            return {
+                access_token,
+                token_type: 'bearer',
+                expires_in: 3600,
+                refresh_token,
+                scope: 'read create'
+            }
+
+        });
+    }
+
     getUserInfo({ access_token }){
         if(!access_token){
             throw new ValidationError({
@@ -150,6 +204,47 @@ export class UserService {
                 firstName: user.firstName,
                 address: user.address.address,
                 avatar: user.avatar
+            }
+        });
+    }
+
+    updateUserInfo(data){
+        let access_token = data.access_token;
+
+        if(!access_token){
+            throw new ValidationError({
+                error: 'invalid_request'
+            });
+        }
+        let decoded = null;
+        try {
+            decoded = jwt.verify(access_token, TOKEN_KEY);
+            
+        } catch(err) {
+            throw new AuthorizationError({
+                error: 'invalid access_token'
+            });
+        }
+
+        return db.User.findOne({
+            where: {
+                id: decoded.user_id
+            }
+        }).then( user => {
+            if(!user){
+                throw new AuthenticationError({
+                    error: 'user not exits!'
+                });
+            }
+            console.log('userrrr', user);
+            if(user){
+                return user.update({
+                    lastName: data.lastName,
+                    firstName: data.firstName,
+                    address: data.address,
+                    phone: data.phone,
+                    avatar: data.avatar
+                });
             }
         });
     }

@@ -7,9 +7,7 @@ const path = require('path');
 var cors = require('cors');
 
 //import routes
-const usersRouter = require('./src/routes/user.route');
-const providersRouter = require('./src/routes/provider.route');
-const authRouter = require('./src/routes/authenticate.route');
+const indexRouter = require('./src/routes/index.route');
 
 app.use(express.static(path.resolve('./uploads')));
 app.use(logger('dev'));
@@ -20,7 +18,5 @@ app.use(cors());
 
 
 //use routes
-app.use('api/user', usersRouter);
-app.use('api/provider', providersRouter);
-app.use('api/token', authRouter);
+app.use('/api', indexRouter);
 module.exports = app;

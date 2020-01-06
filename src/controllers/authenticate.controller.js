@@ -16,10 +16,19 @@ export class AuthenticateController {
             grant_type,
             code,
             redirect_uri
-        }).then( res => {
-
+        }).then( response  => {
+            res.status(200).send({
+				data: {
+                    access_token: response.access_token,
+                    token_type: response.token_type,
+                    expires_in: response.expires_in,
+                    refresh_token: response.refresh_token,
+                    scope: response.scope,
+                },
+				status: true
+			});
         }).catch( err => {
-
+            next(err);
         });
     }
 }
